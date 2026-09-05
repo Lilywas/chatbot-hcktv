@@ -19,7 +19,10 @@ st.title("🏥 Chatbot Informasi Jadwal Dokter RSA UGM")
 st.caption(f"📅 Data Jadwal Berdasarkan Hari Ini: **{today}**")
 
 #Konfigurasi API Key Gemini
+if "user_api_key" not in st.session_state:
+    st.session_state.user_api_key = ""
 api_key = None
+
 try:
     if "GEMINI_API_KEY" in st.secrets:
         api_key = st.secrets["GEMINI_API_KEY"]
@@ -29,8 +32,14 @@ except Exception:
 with st.sidebar:
     st.header("Konfigurasi GEMINI API KEY")
     if not api_key:
-        api_key = st.text_input("Masukkan Gemini API Key:", type="password")
-        if not api_key:
+        input_key = st.text_input(
+            "Masukkan Gemini API Key:", type="password", value=st.session_state.user_api_key
+        )
+        if input_key:
+            st.session_state.user_api_key = input_key
+            api_key = input_key
+            st.success("API Key berhasil disimpan!")
+        else:
             st.warning("Silakan masukkan API Key Gemini untuk memulai.")
 
 if api_key:
