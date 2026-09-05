@@ -75,7 +75,6 @@ def fetch_jadwal_from_api():
 jadwal_data = fetch_jadwal_from_api()
 
 #Status Data di Sidebar
-# Status Data di Sidebar
 with st.sidebar:
     st.header("Status Data API")
     st.info(f"Date: {today}")
