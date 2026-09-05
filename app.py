@@ -20,15 +20,18 @@ st.caption(f"📅 Data Jadwal Berdasarkan Hari Ini: **{today}**")
 
 #Konfigurasi API Key Gemini
 api_key = None
-if "GEMINI_API_KEY" in st.secrets:
-    api_key = st.secrets["GEMINI_API_KEY"]
+try:
+    if "GEMINI_API_KEY" in st.secrets:
+        api_key = st.secrets["GEMINI_API_KEY"]
+except Exception:
+    pass
 
 with st.sidebar:
     st.header("Konfigurasi GEMINI API KEY")
     if not api_key:
         api_key = st.text_input("Masukkan Gemini API Key:", type="password")
         if not api_key:
-            st.warning("Silakan masukkan API Key Gemini untuk mulai bertanya.")
+            st.warning("Silakan masukkan API Key Gemini untuk memulai.")
 
 if api_key:
     genai.configure(api_key=api_key)
