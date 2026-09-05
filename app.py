@@ -99,8 +99,14 @@ for msg in st.session_state.messages:
     with st.chat_message(msg["role"]):
         st.markdown(msg["content"])
 
-# Prompt
-if prompt := st.chat_input("Tanyakan jadwal dokter (contoh: Dokter anak praktik jam berapa?)"):
+chat_placeholder = (
+    "Tanyakan jadwal dokter (contoh: Dokter anak praktik jam berapa?)" 
+    if api_key 
+    else "Silakan masukkan Gemini API Key terlebih dahulu."
+)
+
+#Prompt
+if prompt := st.chat_input(chat_placeholder, disabled=not api_key):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
